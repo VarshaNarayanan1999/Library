@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+         <record id="email_template_sale_order" model="mail.template">
+            <field name="name">Confirmation of sale order</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="email_from">{{ (object.user_id.email_formatted or object.company_id.email_formatted or user.email_formatted) }}</field>
+             <field name="email_to">{{object.partner_id.email}}</field>
+             <field name="subject">Sale order confirmed</field>
+            <field name="body_html"><![CDATA[
+                <p>
+                    Dear <t t-out="object.partner_id.name"/>,
+                    <br/>
+                </p>
+                <p>Your sale order <t t-out="object.name"/> on  <t t-out="object.date_order.strftime('%Y-%m-%d')"/> has been confirmed.</p>
+                <p>Sale Order Products</p>
+          <ul>
+          <t t-foreach="object.order_line" t-as="line">
+            <li>
+              product : <t t-out="line.product_template_id.name"/><br/>
+              Price :  <t t-out="line.price_unit"/><br/>
+              Number of units : <t t-out="line.product_uom_qty"/> (<t t-out="line.product_uom.name"/>)<br/>
+              Sub total :  <t t-out="line.price_subtotal"/><br/>
+            </li>
+          </t>
+          </ul>
+                ]]>
+            </field>
+        </record>
+    </data>
+</odoo>

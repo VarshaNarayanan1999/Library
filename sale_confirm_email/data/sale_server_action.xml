@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="server_action_send_sale_order_email" model="ir.actions.server">
+            <field name="name">Send Email on Sale Order Confirmation</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="state">code</field>
+            <field name="code">
+                action = env.ref('sale_confirm_email.email_template_sale_order').send_mail(record.id, force_send=True)
+            </field>
+        </record>
+
+        <record id="sale_order_confirmed_rule" model="base.automation">
+            <field name="name">Send Email on Sale Order Confirmation</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="trigger">on_create</field>
+            <field name="active" eval="True"/>
+            <field name="state">code</field>
+            <field name="code">
+                action = env.ref('sale_confirm_email.server_action_send_sale_order_email').run()
+            </field>
+        </record>
+    </data>
+</odoo>

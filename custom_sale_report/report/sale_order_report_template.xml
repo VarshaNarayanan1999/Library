@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<odoo>
+    <template id="report_saleorder_document_inherit" inherit_id="sale.report_saleorder_document">
+        <xpath expr="//div[@name='informations_date']" position="after">
+            <div t-if="doc.customer_reference" class="col-auto col-3 mw-100 mb-2" name="customer_reference">
+                <strong>Customer Reference:</strong>
+                <p class="m-0" t-field="doc.customer_reference"/>
+            </div>
+        </xpath>
+    </template>
+</odoo>
+

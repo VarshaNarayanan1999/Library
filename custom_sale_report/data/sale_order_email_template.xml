@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+         <record id="email_template_sale_order" model="mail.template">
+            <field name="name">Confirmation of sale order</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="email_from">${object.env.user.name}&lt;${object.env.user.email}&gt;</field>
+             <field name="email_to">${object.user_id.email}</field>
+             <field name="subject">Sale order confirmed</field>
+            <field name="body_html"><![CDATA[
+                <p>Dear ${object.partner_id.name},</p>
+                <p>Your sale order ${object.name} has been confirmed.</p>
+                <p>Customer Reference: ${object.customer_reference}</p>
+                <p>Thank you for your business.</p>
+                ]]></field>
+        </record>
+    </data>
+</odoo>
